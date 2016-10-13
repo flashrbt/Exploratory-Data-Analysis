@@ -7,7 +7,7 @@ sccdata <- data.table(readRDS("Source_Classification_Code.rds"))
 
 #get SCC code of Coal Combustion related source.
 
-scc_comb_coal<-sccdata[grep('.*Comb.*Coal.*', sccdata$Short.Name,),]$SCC
+scc_comb_coal<-sccdata[grep('.*Comb.*Coal.*', sccdata$Short.Name),]$SCC
 
 #subset pm2.5 data of coal combustion
 

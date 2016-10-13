@@ -19,6 +19,8 @@ mv_baltimore<-baltimore[SCC %in% mv_SCC,]
 
 mv_total_baltimore<-mv_baltimore[,list(Emissions=sum(Emissions)),by=year]
 
+#start plot data
+
 png("plot5.png")
 g<-ggplot(data=mv_total_baltimore,aes(year,Emissions))
 g<-g+geom_line()
