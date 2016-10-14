@@ -11,7 +11,7 @@ LA<-pm25data[fips=='06037',]
 # in this code, Motorcycles (MC) is considered as motor vehicles too
 # get SCC code of motor vehicles
 
-mv_SCC<-sccdata[grep("*Motorcycles*|*Vehicle", sccdata$Short.Name),]$SCC
+# mv_SCC<-sccdata[grep("*Motorcycles*|*Vehicle", sccdata$Short.Name),]$SCC
 #
 # If motorcycle is not condisered as motor vehicles, 
 # 
@@ -20,14 +20,17 @@ mv_SCC<-sccdata[grep("*Motorcycles*|*Vehicle", sccdata$Short.Name),]$SCC
 # subset motor vehicle related data from baltimore data
 #
 
-mv_baltimore<-baltimore[SCC %in% mv_SCC,]
+# mv_baltimore<-baltimore[SCC %in% mv_SCC,]
+# use type=="ON-ROAD" for motor vehicles
+mv_baltimore<-baltimore[type=="ON-ROAD",]
 
 mv_total_baltimore<-mv_baltimore[,list(Emissions=sum(Emissions)),by=c("year")]
 
 # subset motor vehicle related data from LA data
 
-mv_LA<-LA[SCC %in% mv_SCC,]
-
+# mv_LA<-LA[SCC %in% mv_SCC,]
+# use type=="ON-ROAD" for motor vehicles
+mv_LA<-LA[type=="ON-ROAD",]
 mv_total_LA<-mv_LA[,list(Emissions=sum(Emissions)),by=c("year")]
 
 #add new col "city',then merge data
@@ -48,4 +51,22 @@ g<-g+labs(title="Total emissions of motor vehicle source in Baltimore and Los An
 print(g)
 
 dev.off()
+
+
+mv_baltimore2<-baltimore[type=='ON-ROAD',]
+
+mv_total_baltimore2<-mv_baltimore2[,list(Emissions=sum(Emissions)),by=c("year")]
+
+# subset motor vehicle related data from LA data
+
+mv_LA2<-LA[type=='ON-ROAD',]
+
+mv_total_LA2<-mv_LA2[,list(Emissions=sum(Emissions)),by=c("year")]
+
+#add new col "city',then merge data
+
+mv_total_baltimore2$city<-"Baltimore"
+mv_total_LA2$city<-"Los Angles County"
+
+mv_two_total2<-rbind(mv_total_LA2,mv_total_baltimore2)
 

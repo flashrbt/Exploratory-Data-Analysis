@@ -10,12 +10,15 @@ baltimore<-pm25data[fips=='24510',]
 # in this code, Motorcycles (MC) is considered as motor vehicles too
 # get SCC code of motor vehicles
 
-mv_SCC<-sccdata[grep("*Motorcycles*|*Vehicles", sccdata$Short.Name),]$SCC
+# mv_SCC<-sccdata[grep("*Motorcycles*|*Vehicles", sccdata$Short.Name),]$SCC
 
 # subset motor vehicle related data from baltimore data
 #
 
-mv_baltimore<-baltimore[SCC %in% mv_SCC,]
+# mv_baltimore<-baltimore[SCC %in% mv_SCC,]
+# use type=="ON-ROAD" for motor vehicles
+
+mv_baltimore<-baltimore[type=="ON-ROAD",]
 
 mv_total_baltimore<-mv_baltimore[,list(Emissions=sum(Emissions)),by=year]
 
